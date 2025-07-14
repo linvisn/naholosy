@@ -46,7 +46,7 @@ const groups = splitToGroups(words, 4)
 
   <div class="d-flex justify-center my-10">
     <NuxtLink to="/practice">
-      <v-btn size="x-large" variant="tonal" elevation="8">Розпочати практику</v-btn>
+      <v-btn size="x-large" variant="tonal" elevation="8">Розпочати тренування</v-btn>
     </NuxtLink>
   </div>
 
