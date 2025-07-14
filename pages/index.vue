@@ -40,17 +40,17 @@ const groups = splitToGroups(words, 4)
     </template>
   </v-app-bar>
 
-  <div class="ma-10 text-h1 text-center font-weight-bold font-italic">
+  <div class="mt-10 text-h2 text-center font-weight-bold font-italic">
     Вітаємо в тренажері наголосів <br> для ЗНО/НМТ
   </div>
 
-  <div class="d-flex justify-center">
+  <div class="d-flex justify-center my-10">
     <NuxtLink to="/practice">
       <v-btn size="x-large" variant="tonal" elevation="8">Розпочати практику</v-btn>
     </NuxtLink>
   </div>
 
-  <v-row class="my-10">
+  <v-row dense>
     <v-col v-for="(group, groupIndex) in groups" :key="groupIndex" cols="12" sm="6" md="3">
       <v-expansion-panels multiple>
         <v-expansion-panel v-for="(item, itemIndex) in group" :key="itemIndex" :title="item.letter">
@@ -61,4 +61,10 @@ const groups = splitToGroups(words, 4)
       </v-expansion-panels>
     </v-col>
   </v-row>
+
+  <v-footer border class="d-flex align-center justify-center flex-column mt-10 mx-auto px-10" :style="{ width: 'fit-content' }">
+    <div class="text-overline text-justify">Бажаєте допомогти з покращенням застосунку? Перейдіть до <a href="https://github.com/linvisn/naholosy">репозиторію</a>, аби дізнатися більше.</div>
+    <v-divider class="my-2" thickness="1" width="200" />
+    <div class="text-caption">2025 - <a href="https://github.com/linvisn/">linvisn</a></div>
+  </v-footer>
 </template>

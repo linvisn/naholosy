@@ -51,7 +51,7 @@ const checkWord = () => {
         <v-select class="mt-6 mb-10" v-model="chosenLetters" label="літери, з яких мають починатися слова"
             :items="extractLetters()" multiple clearable />
 
-        <div class="d-flex align-center ga-10">
+        <div class="d-flex align-center flex-wrap ga-4">
             <v-btn class="bg-deep-orange-accent-4" size="large" variant="tonal" elevation="8"
                 :disabled="chosenLetters.length < 1" @click="startPractice()">Розпочати</v-btn>
             <v-btn @click="chosenLetters = extractLetters()">Обрати всі літери</v-btn>
@@ -68,16 +68,16 @@ const checkWord = () => {
     </div>
 
     <div v-else>
-        <div class="text-h1 text-lowercase" :style="{ 'user-select': 'none' }">{{ currentWord }}</div>
+        <div class="text-h2 text-lowercase text-break" :style="{ 'user-select': 'none' }">{{ currentWord }}</div>
 
-        <div class="d-flex ga-5 my-6">
+        <div class="d-flex flex-wrap ga-2 my-6">
             <v-chip>Слів залишилось: {{ array.length }}</v-chip>
             <v-chip>{{ pointsAmount }} з {{ maxPoints }} правильних відповідей</v-chip>
         </div>
 
         <v-text-field v-model="answer" label="Запиши слово маленькими літерами, а наголошені голосні - великими" />
 
-        <div class="d-flex ga-5">
+        <div class="d-flex flex-wrap ga-4">
             <v-btn v-if="array.length > 1" variant="tonal" @click="checkWord()">Перевірити</v-btn>
             <v-btn v-else class="bg-green" size="large" @click="checkWord()">Закінчити</v-btn>
             <v-btn v-if="array.length > 1" variant="text" @click="isPreparation = true">Повернутися до
