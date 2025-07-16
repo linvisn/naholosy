@@ -5,7 +5,7 @@ import { useTheme } from 'vuetify'
 const defaultTheme = useStorage('defaultTheme', 'light')
 const theme = useTheme()
 
-watch(defaultTheme, (newTheme, oldTheme) => { theme.change(newTheme) }, { immediate: true })
+watch(defaultTheme, newTheme => { theme.change(newTheme) }, { immediate: true })
 </script>
 
 <template>

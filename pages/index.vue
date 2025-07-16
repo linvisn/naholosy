@@ -14,40 +14,28 @@ const splitToGroups = (arr, amount) => {
 
   return result
 }
+const toggleTheme = () => {
+  defaultTheme.value = defaultTheme.value === 'light' ? 'dark' : 'light'
+}
 
 const groups = splitToGroups(words, 4)
 </script>
 
 <template>
-  <v-app-bar class="position-sticky">
-    <v-app-bar-title>
-      Тренажер наголосів
-    </v-app-bar-title>
-
-    <template #append>
-      <v-tooltip text="Перемкнути тему">
-        <template #activator="{ props: toggleTheme }">
-          <v-switch v-model="defaultTheme" v-bind="toggleTheme" false-value="light" true-value="dark" hide-details
-            inset />
-        </template>
-      </v-tooltip>
-
-      <v-tooltip text="Шукати наголоси (буде зроблено згодом)">
-        <template #activator="{ props: search }">
-          <v-btn v-bind="search" icon="mdi-magnify" />
-        </template>
-      </v-tooltip>
-    </template>
-  </v-app-bar>
-
   <div class="mt-10 text-h2 text-center font-weight-bold font-italic">
     Вітаємо в тренажері наголосів <br> для ЗНО/НМТ
   </div>
 
-  <div class="d-flex justify-center my-10">
+  <div class="d-flex flex-row items-center justify-center ga-6 my-10">
     <NuxtLink to="/practice">
-      <v-btn size="x-large" variant="tonal" elevation="8">Розпочати тренування</v-btn>
+      <v-btn prepend-icon="mdi-play" size="x-large" variant="tonal" elevation="8">Розпочати тренування</v-btn>
     </NuxtLink>
+    
+    <v-tooltip text="Перемкнути тему">
+      <template #activator="{ props: theme }">
+        <v-btn v-bind="theme" icon="mdi-theme-light-dark" elevation="4" @click="toggleTheme()" />
+      </template>
+    </v-tooltip>
   </div>
 
   <v-row dense>
@@ -62,8 +50,10 @@ const groups = splitToGroups(words, 4)
     </v-col>
   </v-row>
 
-  <v-footer border class="d-flex align-center justify-center flex-column mt-10 mx-auto px-10" :style="{ width: 'fit-content' }">
-    <div class="text-overline text-justify">Бажаєте допомогти з покращенням застосунку? Перейдіть до <a href="https://github.com/linvisn/naholosy">репозиторію</a>, аби дізнатися більше.</div>
+  <v-footer border class="d-flex align-center justify-center flex-column mt-10 mx-auto px-10"
+    :style="{ width: 'fit-content' }">
+    <div class="text-overline text-justify">Бажаєте допомогти з покращенням застосунку? Перейдіть до <a
+        href="https://github.com/linvisn/naholosy">репозиторію</a>, аби дізнатися більше.</div>
     <v-divider class="my-2" thickness="1" width="200" />
     <div class="text-caption">2025 - <a href="https://github.com/linvisn/">linvisn</a></div>
   </v-footer>
