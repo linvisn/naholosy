@@ -24,20 +24,22 @@ const startPractice = () => {
     mistakes.value = []
     chipColor.value = ''
 
-    array.value = words.filter(item => chosenLetters.value.includes(item.letter)).flatMap(item => item.words).slice(0, practiceAll.value ? undefined : wordAmount.value)
-    let currentIndex = array.value.length
-    maxPoints.value = array.value.length
+    let wordsToShuffle = words.filter(item => chosenLetters.value.includes(item.letter)).flatMap(item => item.words)
+    let currentIndex = wordsToShuffle.length
 
     while (currentIndex != 0) {
         let randomIndex = Math.floor(Math.random() * currentIndex)
         currentIndex--
-        [array.value[currentIndex], array.value[randomIndex]] = [array.value[randomIndex], array.value[currentIndex]]
+        [wordsToShuffle[currentIndex], wordsToShuffle[randomIndex]] = [wordsToShuffle[randomIndex], wordsToShuffle[currentIndex]]
     }
 
+    array.value = wordsToShuffle.slice(0, practiceAll.value ? undefined : wordAmount.value)
+    maxPoints.value = array.value.length
     currentWord.value = array.value[0]
 }
 const checkWord = () => {
-    let isCorrect = Array.isArray(currentWord.value.word) ? currentWord.value.word.includes(answer.value) : currentWord.value.word === answer.value
+    let processedAnswer = answer.value[0].toLowerCase() + answer.value.slice(1)
+    let isCorrect = Array.isArray(currentWord.value.word) ? currentWord.value.word.includes(processedAnswer) : currentWord.value.word === processedAnswer
 
     if (isCorrect) {
         pointsAmount.value++
@@ -63,7 +65,8 @@ const checkWord = () => {
 
 <template>
     <div v-if="isPreparation">
-        <div class="text-h5 font-weight-bold"><v-icon icon="mdi-information" /> Оберіть нижченаведені параметри перед тим, як розпочати</div>
+        <v-alert class="text-h5 font-weight-bold" type="info"
+            text="Оберіть нижченаведені параметри перед тим, як розпочати" />
         <div class="mt-6 mb-10">
             <v-select v-model="chosenLetters" label="літери, з яких мають починатися слова" :items="extractLetters()"
                 multiple clearable />
@@ -96,8 +99,8 @@ const checkWord = () => {
                 <v-table :striped="'odd'" fixed-header hover>
                     <thead>
                         <tr>
-                            <th>Ваша відповідь</th>
-                            <th>Правильна відповідь</th>
+                            <th>ваша відповідь</th>
+                            <th>правильна відповідь</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -119,7 +122,7 @@ const checkWord = () => {
             <v-chip :color="chipColor">{{ pointsAmount }} з {{ maxPoints }} правильних відповідей</v-chip>
         </div>
 
-        <v-text-field v-model="answer" label="Запиши слово маленькими літерами, а наголошені голосні - великими" />
+        <v-text-field v-model="answer" label="запиши слово маленькими літерами, а наголошені голосні - великими" />
 
         <div class="d-flex flex-wrap ga-4">
             <v-btn v-if="array.length > 1" variant="tonal" @click="checkWord()">Перевірити</v-btn>
