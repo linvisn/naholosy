@@ -38,7 +38,7 @@ const startPractice = () => {
     currentWord.value = array.value[0]
 }
 const checkWord = () => {
-    let processedAnswer = answer.value[0].toLowerCase() + answer.value.slice(1)
+    let processedAnswer = answer.value[0] === currentWord.value.word[0] ? answer.value : (answer.value[0].toLowerCase() + answer.value.slice(1))
     let isCorrect = Array.isArray(currentWord.value.word) ? currentWord.value.word.includes(processedAnswer) : currentWord.value.word === processedAnswer
 
     if (isCorrect) {
@@ -65,8 +65,8 @@ const checkWord = () => {
 
 <template>
     <div v-if="isPreparation">
-        <v-alert class="text-h5 font-weight-bold" type="info"
-            text="Оберіть нижченаведені параметри перед тим, як розпочати" />
+        <v-alert class="text-h5 font-weight-bold" type="info" variant="text" icon-size="x-large" prominent
+            text="Оберіть нижченаведені параметри перед тим, як розпочати тренування" />
         <div class="mt-6 mb-10">
             <v-select v-model="chosenLetters" label="літери, з яких мають починатися слова" :items="extractLetters()"
                 multiple clearable />
@@ -115,17 +115,19 @@ const checkWord = () => {
     </div>
 
     <div v-else>
-        <div class="text-h2 text-break">{{ currentWord.display }}</div>
+        <v-alert class="text-h2 text-break" width="fit-content">{{ currentWord.display }}</v-alert>
 
         <div class="d-flex flex-wrap ga-2 my-6">
-            <v-chip>Слів залишилось: {{ array.length }}</v-chip>
+            <v-chip>слів залишилось: {{ array.length }}</v-chip>
             <v-chip :color="chipColor">{{ pointsAmount }} з {{ maxPoints }} правильних відповідей</v-chip>
         </div>
 
-        <v-text-field v-model="answer" label="запиши слово маленькими літерами, а наголошені голосні - великими" />
+        <v-text-field v-model="answer"
+            label="запиши слово маленькими літерами, а наголошені голосні - великими (першу літеру також можна записати великою, навіть якщо вона ненаголошена)" />
 
         <div class="d-flex flex-wrap ga-4">
-            <v-btn v-if="array.length > 1" variant="tonal" @click="checkWord()">Перевірити</v-btn>
+            <v-btn v-if="array.length > 1" :disabled="answer.length < 1" variant="tonal"
+                @click="checkWord()">Перевірити</v-btn>
             <v-btn v-else class="bg-green" size="large" @click="checkWord()">Закінчити</v-btn>
             <v-btn v-if="array.length > 1" variant="text" @click="isPreparation = true">Повернутися до
                 налаштувань</v-btn>
