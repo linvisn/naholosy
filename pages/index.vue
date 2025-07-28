@@ -22,7 +22,7 @@ const groups = splitToGroups(words, 4)
 </script>
 
 <template>
-  <div class="mt-10 text-h2 text-center font-weight-bold" :style="{ 'line-height': 1.35 }">
+  <div class="mt-4 mt-sm-8 text-h2 text-center font-weight-bold" :style="{ 'line-height': 1.35 }">
     Вітаємо в тренажері <span class="px-3 bg-blue-lighten-1">наголосів</span> для <span class="px-3 bg-teal-accent-4">ЗНО/НМТ</span>
   </div>
 

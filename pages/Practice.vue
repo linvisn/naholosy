@@ -96,7 +96,7 @@ const checkWord = () => {
 
         <v-overlay v-model="showMistakes" class="d-flex align-center justify-center">
             <v-card title="Помилки, яких ви припустилися">
-                <v-table striped="odd" density="compact" fixed-header hover>
+                <v-table :style="{ 'max-width': '75vh', 'max-height': '75vh' }" striped="odd" density="compact" fixed-header hover>
                     <thead>
                         <tr>
                             <th>ваша відповідь</th>
@@ -122,13 +122,14 @@ const checkWord = () => {
             <v-chip :color="chipColor">{{ pointsAmount }} з {{ maxPoints }} правильних відповідей</v-chip>
         </div>
 
-        <v-text-field v-model="answer"
+        <v-text-field v-model="answer" @keyup.enter="answer.length > 1 ? checkWord() : ''"
             label="запиши слово маленькими літерами, а наголошені голосні - великими (першу літеру також можна записати великою, навіть якщо вона ненаголошена)" />
 
         <div class="d-flex flex-wrap ga-4">
             <v-btn v-if="array.length > 1" :disabled="answer.length < 1" variant="tonal"
                 @click="checkWord()">Перевірити</v-btn>
-            <v-btn v-else :disabled="answer.length < 1" class="bg-green" size="large" @click="checkWord()">Закінчити</v-btn>
+            <v-btn v-else :disabled="answer.length < 1" class="bg-green" size="large"
+                @click="checkWord()">Закінчити</v-btn>
             <v-btn v-if="array.length > 1" variant="text" @click="isPreparation = true">Повернутися до
                 налаштувань</v-btn>
         </div>
