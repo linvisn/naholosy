@@ -2,9 +2,12 @@
 import words from '~/assets/data/words_processed.json'
 
 const isPreparation = ref(true)
-const practiceAll = ref(true)
-const wordAmount = ref(1)
+const practiceAllWords = ref(true)
+const wordsAmount = ref(1)
+const letters = words.map((word) => word.letter)
 const chosenLetters = ref([])
+const useShuffledLetters = ref(false)
+const shuffledLettersAmount = ref(1)
 const array = ref([])
 const currentWord = ref({})
 const answer = ref('')
@@ -15,8 +18,9 @@ const mistakes = ref([])
 const showMistakes = ref(false)
 const chipColor = ref('')
 
-const extractLetters = () => {
-    return words.map((word) => word.letter)
+const shuffleLetters = () => {
+    let shuffled = letters.sort(() => 0.5 - Math.random())
+    return shuffled.slice(0, shuffledLettersAmount.value)
 }
 const startPractice = () => {
     isPreparation.value = false
@@ -33,7 +37,7 @@ const startPractice = () => {
         [wordsToShuffle[currentIndex], wordsToShuffle[randomIndex]] = [wordsToShuffle[randomIndex], wordsToShuffle[currentIndex]]
     }
 
-    array.value = wordsToShuffle.slice(0, practiceAll.value ? undefined : wordAmount.value)
+    array.value = wordsToShuffle.slice(0, practiceAllWords.value ? undefined : wordsAmount.value)
     maxPoints.value = array.value.length
     currentWord.value = array.value[0]
 }
@@ -68,19 +72,25 @@ const checkWord = () => {
         <v-alert class="text-h5 font-weight-bold" type="info" variant="text" icon-size="x-large" prominent
             text="Оберіть нижченаведені параметри перед тим, як розпочати тренування" />
         <div class="mt-6 mb-10">
-            <v-select v-model="chosenLetters" label="літери, з яких мають починатися слова" :items="extractLetters()"
+            <v-select v-model="chosenLetters" label="літери, з яких мають починатися слова" :items="letters"
                 multiple clearable />
             <v-row class="d-flex flex-row">
-                <v-col><v-checkbox v-model="practiceAll" label="Практикувати всі слова" /></v-col>
-                <v-col><v-number-input v-model="wordAmount" :min="1" :disabled="practiceAll" controlVariant="stacked"
+                <v-col><v-checkbox v-model="practiceAllWords" label="Практикувати всі слова" /></v-col>
+                <v-col><v-number-input v-model="wordsAmount" :min="1" :disabled="practiceAllWords" controlVariant="stacked"
                         label="кількість слів" /></v-col>
+            </v-row>
+            <v-row class="d-flex flex-row">
+                <v-col><v-checkbox v-model="useShuffledLetters" label="Обрати випадкові літери" /></v-col>
+                <v-col><v-number-input v-model="shuffledLettersAmount" :min="1" :disabled="!useShuffledLetters" controlVariant="stacked"
+                        label="кількість випадкових літер" /></v-col>
             </v-row>
         </div>
 
         <div class="d-flex align-center flex-wrap ga-4">
             <v-btn class="bg-deep-orange-accent-4" size="large" variant="tonal" elevation="8"
                 :disabled="chosenLetters.length < 1" @click="startPractice()">Розпочати</v-btn>
-            <v-btn @click="chosenLetters = extractLetters()">Обрати всі літери</v-btn>
+            <v-btn @click="chosenLetters = letters">Обрати всі літери</v-btn>
+            <v-btn :disabled="!useShuffledLetters" @click="chosenLetters = shuffleLetters()">Обрати випадкові літери</v-btn>
             <NuxtLink to="/">
                 <v-btn variant="text">Повернутися до головної сторінки</v-btn>
             </NuxtLink>
@@ -96,7 +106,8 @@ const checkWord = () => {
 
         <v-overlay v-model="showMistakes" class="d-flex align-center justify-center">
             <v-card title="Помилки, яких ви припустилися">
-                <v-table :style="{ 'max-width': '75vh', 'max-height': '75vh' }" striped="odd" density="compact" fixed-header hover>
+                <v-table :style="{ 'max-width': '75vh', 'max-height': '75vh' }" striped="odd" density="compact"
+                    fixed-header hover>
                     <thead>
                         <tr>
                             <th>ваша відповідь</th>
@@ -123,7 +134,7 @@ const checkWord = () => {
         </div>
 
         <v-text-field v-model="answer" @keyup.enter="answer.length > 1 ? checkWord() : ''"
-            label="запиши слово маленькими літерами, а наголошені голосні - великими (першу літеру також можна записати великою, навіть якщо вона ненаголошена)" />
+            label="запишіть слово маленькими літерами, а наголошені голосні - великими (першу літеру також можна записати великою, навіть якщо вона ненаголошена)" />
 
         <div class="d-flex flex-wrap ga-4">
             <v-btn v-if="array.length > 1" :disabled="answer.length < 1" variant="tonal"
