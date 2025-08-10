@@ -6,8 +6,8 @@ const practiceAllWords = ref(true)
 const wordsAmount = ref(1)
 const letters = words.map((word) => word.letter)
 const chosenLetters = ref([])
-const useShuffledLetters = ref(false)
-const shuffledLettersAmount = ref(1)
+const useRandomLetters = ref(false)
+const randomLettersAmount = ref(1)
 const array = ref([])
 const currentWord = ref({})
 const answer = ref('')
@@ -18,9 +18,9 @@ const mistakes = ref([])
 const showMistakes = ref(false)
 const chipColor = ref('')
 
-const shuffleLetters = () => {
+const pickRandomLetters = () => {
     let shuffled = letters.sort(() => 0.5 - Math.random())
-    return shuffled.slice(0, shuffledLettersAmount.value)
+    return shuffled.slice(0, randomLettersAmount.value)
 }
 const startPractice = () => {
     isPreparation.value = false
@@ -80,8 +80,8 @@ const checkWord = () => {
                         label="кількість слів" /></v-col>
             </v-row>
             <v-row class="d-flex flex-row">
-                <v-col><v-checkbox v-model="useShuffledLetters" label="Обрати випадкові літери" /></v-col>
-                <v-col><v-number-input v-model="shuffledLettersAmount" :min="1" :disabled="!useShuffledLetters" controlVariant="stacked"
+                <v-col><v-checkbox v-model="useRandomLetters" label="Використовувати випадкові літери" /></v-col>
+                <v-col><v-number-input v-model="randomLettersAmount" :min="1" :disabled="!useRandomLetters" controlVariant="stacked"
                         label="кількість випадкових літер" /></v-col>
             </v-row>
         </div>
@@ -90,7 +90,7 @@ const checkWord = () => {
             <v-btn class="bg-deep-orange-accent-4" size="large" variant="tonal" elevation="8"
                 :disabled="chosenLetters.length < 1" @click="startPractice()">Розпочати</v-btn>
             <v-btn @click="chosenLetters = letters">Обрати всі літери</v-btn>
-            <v-btn :disabled="!useShuffledLetters" @click="chosenLetters = shuffleLetters()">Обрати випадкові літери</v-btn>
+            <v-btn :disabled="!useRandomLetters" @click="chosenLetters = pickRandomLetters()">Обрати випадкові літери</v-btn>
             <NuxtLink to="/">
                 <v-btn variant="text">Повернутися до головної сторінки</v-btn>
             </NuxtLink>
