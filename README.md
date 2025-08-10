@@ -7,11 +7,11 @@
 - Можливість обирати кількість слів і літери, з яких вони будуть починатися
 - Перемикання тем і не тільки!
 
-## Використані інструменти і фреймворки
+## Використані інструменти та фреймворки
 - [Nuxt 3](https://nuxt.com/)
 - [VueUse](https://vueuse.org/)
 - [Vue.js 3](https://vuejs.org/)
 - [Vuetify](https://vuetifyjs.com/)
 
 ## Бажаєте допомогти з покращенням застосунку?
-Напишіть свої ідеї у [каналі для пропозицій](https://github.com/linvisn/naholosy/discussions/categories/%D0%BF%D1%80%D0%BE%D0%BF%D0%BE%D0%B7%D0%B8%D1%86%D1%96%D1%97) або ж повідомте про помилки у [розділі проблем](https://github.com/linvisn/naholosy/issues). Дякую за співпрацю!
+Напишіть свої ідеї в [каналі для пропозицій](https://github.com/linvisn/naholosy/discussions/categories/%D0%BF%D1%80%D0%BE%D0%BF%D0%BE%D0%B7%D0%B8%D1%86%D1%96%D1%97) або ж повідомте про помилки в [розділі проблем](https://github.com/linvisn/naholosy/issues). Дякую за співпрацю!
