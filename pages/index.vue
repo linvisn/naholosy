@@ -31,6 +31,7 @@ const groups = splitToGroups(words, 4)
       <v-btn prepend-icon="mdi-play" size="x-large" variant="tonal" elevation="8">Розпочати тренування</v-btn>
     </NuxtLink>
     <v-btn prepend-icon="mdi-theme-light-dark" size="large" @click="toggleTheme()">Перемкнути тему</v-btn>
+    <a href="https://www.privat24.ua/send/hz9q7" target="_blank"><v-btn size="large">Підтримати розробку</v-btn></a>
   </div>
 
   <v-card class="py-1 border" variant="elevated">
