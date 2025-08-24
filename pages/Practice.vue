@@ -72,17 +72,17 @@ const checkWord = () => {
         <v-alert class="text-h5 font-weight-bold" type="info" variant="text" icon-size="x-large" prominent
             text="Оберіть нижченаведені параметри перед тим, як розпочати тренування" />
         <div class="mt-6 mb-10">
-            <v-select v-model="chosenLetters" label="літери, з яких мають починатися слова" :items="letters"
-                multiple clearable />
+            <v-select v-model="chosenLetters" label="літери, з яких мають починатися слова" :items="letters" multiple
+                clearable />
             <v-row class="d-flex flex-row">
                 <v-col><v-checkbox v-model="practiceAllWords" label="Практикувати всі слова" /></v-col>
-                <v-col><v-number-input v-model="wordsAmount" :min="1" :disabled="practiceAllWords" controlVariant="stacked"
-                        label="кількість слів" /></v-col>
+                <v-col><v-number-input v-model="wordsAmount" :min="1" :disabled="practiceAllWords"
+                        controlVariant="stacked" label="кількість слів" /></v-col>
             </v-row>
             <v-row class="d-flex flex-row">
                 <v-col><v-checkbox v-model="useRandomLetters" label="Використовувати випадкові літери" /></v-col>
-                <v-col><v-number-input v-model="randomLettersAmount" :min="1" :disabled="!useRandomLetters" controlVariant="stacked"
-                        label="кількість випадкових літер" /></v-col>
+                <v-col><v-number-input v-model="randomLettersAmount" :min="1" :disabled="!useRandomLetters"
+                        controlVariant="stacked" label="кількість випадкових літер" /></v-col>
             </v-row>
         </div>
 
@@ -90,7 +90,8 @@ const checkWord = () => {
             <v-btn class="bg-deep-orange-accent-4" size="large" variant="tonal" elevation="8"
                 :disabled="chosenLetters.length < 1" @click="startPractice()">Розпочати</v-btn>
             <v-btn @click="chosenLetters = letters">Обрати всі літери</v-btn>
-            <v-btn :disabled="!useRandomLetters" @click="chosenLetters = pickRandomLetters()">Обрати випадкові літери</v-btn>
+            <v-btn :disabled="!useRandomLetters" @click="chosenLetters = pickRandomLetters()">Обрати випадкові
+                літери</v-btn>
             <NuxtLink to="/">
                 <v-btn variant="text">Повернутися до головної сторінки</v-btn>
             </NuxtLink>
@@ -133,7 +134,7 @@ const checkWord = () => {
             <v-chip :color="chipColor">{{ pointsAmount }} з {{ maxPoints }} правильних відповідей</v-chip>
         </div>
 
-        <v-text-field v-model="answer" @keyup.enter="answer.length > 1 ? checkWord() : ''"
+        <v-text-field v-model="answer" @input="answer = answer.replace(/ /g, '')" @keyup.enter="answer.length > 1 ? checkWord() : ''"
             label="запишіть слово маленькими літерами, а наголошені голосні - великими (першу літеру також можна записати великою, навіть якщо вона ненаголошена)" />
 
         <div class="d-flex flex-wrap ga-4">
