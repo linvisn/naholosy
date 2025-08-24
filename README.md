@@ -8,8 +8,7 @@
 - Перемикання тем і не тільки!
 
 ## Використані інструменти та фреймворки
-- [Nuxt 3](https://nuxt.com/)
-- [VueUse](https://vueuse.org/)
+- [Nuxt 4](https://nuxt.com/)
 - [Vue.js 3](https://vuejs.org/)
 - [Vuetify](https://vuetifyjs.com/)
 
