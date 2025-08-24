@@ -1,8 +1,7 @@
 <script setup>
-import { useStorage } from '@vueuse/core'
 import { useTheme } from 'vuetify'
 
-const defaultTheme = useStorage('defaultTheme', 'light')
+const defaultTheme = useCookie('defaultTheme', { default: () => 'light' })
 const theme = useTheme()
 
 watch(defaultTheme, newTheme => { theme.change(newTheme) }, { immediate: true })

@@ -1,24 +1,11 @@
 <script setup>
-import { useStorage } from '@vueuse/core'
 import words from '~/assets/data/words.json'
 
-const defaultTheme = useStorage('defaultTheme', 'light')
+const defaultTheme = useCookie('defaultTheme', { default: () => 'light' })
 
 const toggleTheme = () => {
   defaultTheme.value = defaultTheme.value === 'light' ? 'dark' : 'light'
 }
-const splitToGroups = (arr, amount) => {
-  let result = []
-  let perGroup = Math.ceil(arr.length / amount)
-
-  for (let i = 0; i < amount; i++) {
-    result.push(arr.slice(i * perGroup, (i + 1) * perGroup))
-  }
-
-  return result
-}
-
-const groups = splitToGroups(words, 4)
 </script>
 
 <template>
@@ -28,9 +15,9 @@ const groups = splitToGroups(words, 4)
 
   <div class="d-flex flex-wrap align-center justify-center ga-6 my-10">
     <NuxtLink to="/practice">
-      <v-btn prepend-icon="mdi-play" size="x-large" variant="tonal" elevation="8">Розпочати тренування</v-btn>
+      <v-btn size="x-large" variant="tonal" elevation="8">Розпочати тренування</v-btn>
     </NuxtLink>
-    <v-btn prepend-icon="mdi-theme-light-dark" size="large" @click="toggleTheme()">Перемкнути тему</v-btn>
+    <v-btn size="large" @click="toggleTheme()">Перемкнути тему</v-btn>
     <a href="https://www.privat24.ua/send/hz9q7" target="_blank"><v-btn size="large">Підтримати розробку</v-btn></a>
   </div>
 

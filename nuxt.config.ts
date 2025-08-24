@@ -21,5 +21,5 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-05-15',
   devtools: { enabled: true },
   ssr: true,
-  modules: ['vuetify-nuxt-module', '@nuxt/fonts', '@vueuse/nuxt']
+  modules: ['vuetify-nuxt-module', '@nuxt/fonts']
 })
