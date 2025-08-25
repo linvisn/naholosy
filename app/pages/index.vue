@@ -18,7 +18,7 @@ const toggleTheme = () => {
       <v-btn size="x-large" variant="tonal" elevation="8">Розпочати тренування</v-btn>
     </NuxtLink>
     <v-btn size="large" @click="toggleTheme()">Перемкнути тему</v-btn>
-    <a href="https://www.privat24.ua/send/hz9q7" target="_blank" @click="saEvent('click_support')"><v-btn size="large">Підтримати розробку</v-btn></a>
+    <a href="https://www.privat24.ua/send/hz9q7" target="_blank" @click="if (window.sa_event) window.sa_event('click_support')"><v-btn size="large">Підтримати розробку</v-btn></a>
   </div>
 
   <v-card class="py-1 border" variant="elevated">
