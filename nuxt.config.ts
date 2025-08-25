@@ -15,11 +15,6 @@ export default defineNuxtConfig({
         { property: 'og:image', content: 'https://naholosy.deno.dev/favicon.ico' },
         { property: 'og:locale', content: 'uk_UA' },
         { name: 'google-site-verification', content: 'BPEXZQkSLeox-mevTFPvG93AbPRkUQNL8B8_8pPy2XM' }
-      ],
-      script: [
-        {
-          innerHTML: "window.sa_event=window.sa_event||function(){var a=[].slice.call(arguments);window.sa_event.q?window.sa_event.q.push(a):window.sa_event.q=[a]};"
-        }
       ]
     }
   },
