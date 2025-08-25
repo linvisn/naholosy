@@ -13,8 +13,7 @@ export default defineNuxtConfig({
         { property: 'og:type', content: 'website' },
         { property: 'og:url', content: 'https://naholosy.deno.dev/' },
         { property: 'og:image', content: 'https://naholosy.deno.dev/favicon.ico' },
-        { property: 'og:locale', content: 'uk_UA' },
-        { name: 'google-site-verification', content: 'BPEXZQkSLeox-mevTFPvG93AbPRkUQNL8B8_8pPy2XM' }
+        { property: 'og:locale', content: 'uk_UA' }
       ]
     }
   },
