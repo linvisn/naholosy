@@ -2,6 +2,7 @@
 import words from '~/assets/data/words.json'
 
 const defaultTheme = useCookie('defaultTheme', { default: () => 'light' })
+const showExtra = ref(false)
 
 const toggleTheme = () => {
   defaultTheme.value = defaultTheme.value === 'light' ? 'dark' : 'light'
@@ -15,13 +16,32 @@ const toggleTheme = () => {
 
   <div class="d-flex flex-wrap align-center justify-center ga-6 my-10">
     <NuxtLink to="/practice">
-      <v-btn size="x-large" variant="tonal" elevation="8">Розпочати тренування</v-btn>
+      <v-btn size="x-large" variant="tonal" elevation="8" prepend-icon="i-mdi:play">
+        Розпочати тренування
+      </v-btn>
     </NuxtLink>
-    <v-btn size="large" @click="toggleTheme()">Перемкнути тему</v-btn>
-    <a href="/support" target="_blank">
-      <v-btn size="large" variant="flat">Підтримати розробку</v-btn>
-    </a>
+    <v-btn size="large" @click="showExtra = true" prepend-icon="i-mdi:dots-horizontal">
+      Інше
+    </v-btn>
   </div>
+
+  <v-overlay v-model="showExtra" class="d-flex align-center justify-center">
+    <v-card class="d-flex flex-column align-center ga-3 pa-5">
+      <v-btn size="large" variant="tonal" @click="toggleTheme()" prepend-icon="i-mdi:theme-light-dark">
+        Перемкнути тему
+      </v-btn>
+      <a href="https://www.privat24.ua/send/hz9q7" target="_blank">
+        <v-btn size="large" variant="tonal" prepend-icon="i-mdi:hand-coin">
+          Підтримати розробку
+        </v-btn>
+      </a>
+      <a href="https://github.com/linvisn/naholosy" target="_blank">
+        <v-btn size="large" variant="tonal" prepend-icon="i-mdi:github">
+          Переглянути репозиторій
+        </v-btn>
+      </a>
+    </v-card>
+  </v-overlay>
 
   <v-card class="py-1 border" variant="elevated">
     <v-table density="compact">
@@ -34,10 +54,8 @@ const toggleTheme = () => {
     </v-table>
   </v-card>
 
-  <v-footer class="d-flex align-center justify-center flex-column mt-10 mx-auto px-5 border"
-    :style="{ width: 'fit-content' }">
-    <div class="text-subtitle-1 text-center">Бажаєте допомогти з покращенням застосунку? Перейдіть до <a
-        href="https://github.com/linvisn/naholosy">репозиторію</a>, аби дізнатися більше.</div>
+  <v-footer class="d-flex align-center justify-center flex-column mt-10 mx-auto px-5 border" :style="{ width: 'fit-content' }">
+    <div class="text-subtitle-1 text-center">Дякую, що користуєтеся моїм застосунком!</div>
     <v-divider class="my-2" thickness="1" width="200" />
     <div class="text-caption">2025 - <a href="https://github.com/linvisn/">linvisn</a></div>
   </v-footer>

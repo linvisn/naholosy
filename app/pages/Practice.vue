@@ -87,26 +87,33 @@ const checkWord = () => {
         </div>
 
         <div class="d-flex align-center flex-wrap ga-4">
-            <v-btn class="bg-deep-orange-accent-4" size="large" variant="tonal" elevation="8"
-                :disabled="chosenLetters.length < 1" @click="startPractice()">Розпочати</v-btn>
-            <v-btn @click="chosenLetters = letters">Обрати всі літери</v-btn>
-            <v-btn :disabled="!useRandomLetters" @click="chosenLetters = pickRandomLetters()">Обрати випадкові
-                літери</v-btn>
+            <v-btn class="bg-deep-orange-accent-4" size="large" variant="tonal" elevation="8" :disabled="chosenLetters.length < 1" @click="startPractice()" prepend-icon="i-mdi:play">
+                Розпочати
+            </v-btn>
+            <v-btn @click="chosenLetters = letters" prepend-icon="i-mdi:select-all">
+                Обрати всі літери
+            </v-btn>
+            <v-btn :disabled="!useRandomLetters" @click="chosenLetters = pickRandomLetters()" prepend-icon="i-mdi:shuffle">
+                Обрати випадкові літери
+            </v-btn>
             <NuxtLink to="/">
-                <v-btn variant="text">Повернутися до головної сторінки</v-btn>
+                <v-btn variant="text" prepend-icon="i-mdi:home">
+                    Повернутися до головної сторінки
+                </v-btn>
             </NuxtLink>
         </div>
 
         <v-overlay v-model="showResults" class="d-flex align-center justify-center">
-            <v-card class="d-flex flex-column align-center" title="Результат">
+            <v-card class="d-flex flex-column align-center" title="Результат" prepend-icon="i-mdi:information-box">
                 <v-card-text>Ви правильно визначили наголоси в {{ pointsAmount }} з {{ maxPoints }} слів!</v-card-text>
-                <v-btn v-if="mistakes.length > 0" class="mb-3" variant="tonal"
-                    @click="showMistakes = true; showResults = false">Переглянути помилки</v-btn>
+                <v-btn v-if="mistakes.length > 0" class="mb-3" variant="tonal" @click="showMistakes = true; showResults = false" prepend-icon="i-mdi:eye">
+                    Переглянути помилки
+                </v-btn>
             </v-card>
         </v-overlay>
 
         <v-overlay v-model="showMistakes" class="d-flex align-center justify-center">
-            <v-card title="Помилки, яких ви припустилися">
+            <v-card title="Помилки, яких ви припустилися" prepend-icon="i-mdi:alert-circle">
                 <v-table :style="{ 'max-width': '75vh', 'max-height': '75vh' }" striped="odd" density="compact"
                     fixed-header hover>
                     <thead>
@@ -138,12 +145,15 @@ const checkWord = () => {
             label="запишіть слово маленькими літерами, а наголошені голосні - великими (першу літеру також можна записати великою, навіть якщо вона ненаголошена)" />
 
         <div class="d-flex flex-wrap ga-4">
-            <v-btn v-if="array.length > 1" :disabled="answer.length < 1" variant="tonal"
-                @click="checkWord()">Перевірити</v-btn>
-            <v-btn v-else :disabled="answer.length < 1" class="bg-green" size="large"
-                @click="checkWord()">Закінчити</v-btn>
-            <v-btn v-if="array.length > 1" variant="text" @click="isPreparation = true">Повернутися до
-                налаштувань</v-btn>
+            <v-btn v-if="array.length > 1" :disabled="answer.length < 1" variant="tonal" @click="checkWord()" prepend-icon="i-mdi:check">
+                Перевірити
+            </v-btn>
+            <v-btn v-else :disabled="answer.length < 1" class="bg-green" size="large" @click="checkWord()" prepend-icon="i-mdi:trophy">
+                Закінчити
+            </v-btn>
+            <v-btn v-if="array.length > 1" variant="text" @click="isPreparation = true" prepend-icon="i-mdi:arrow-left">
+                Повернутися до налаштувань
+            </v-btn>
         </div>
     </div>
 </template>

@@ -20,5 +20,12 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-05-15',
   devtools: { enabled: true },
   ssr: true,
-  modules: ['vuetify-nuxt-module', '@nuxt/fonts']
+  modules: ['vuetify-nuxt-module', '@nuxt/fonts', '@unocss/nuxt'],
+  vuetify: {
+    vuetifyOptions: {
+      icons: {
+        defaultSet: 'unocss-mdi'
+      }
+    }
+  }
 })

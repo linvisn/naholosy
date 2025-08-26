@@ -18,6 +18,10 @@
     "vuetify-nuxt-module": "^0.18.7"
   },
   "devDependencies": {
-    "simple-analytics-vue": "^3.0.3"
+    "@iconify-json/mdi": "^1.2.3",
+    "@unocss/nuxt": "^66.4.2",
+    "@unocss/preset-icons": "^66.4.2",
+    "simple-analytics-vue": "^3.0.3",
+    "unocss": "^66.4.2"
   }
 }
