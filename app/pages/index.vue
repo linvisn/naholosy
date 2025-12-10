@@ -3,6 +3,7 @@ import words from '~/assets/data/words.json'
 
 const defaultTheme = useCookie('defaultTheme', { default: () => 'light' })
 const showExtra = ref(false)
+const showUpdates = ref(false)
 
 const toggleTheme = () => {
   defaultTheme.value = defaultTheme.value === 'light' ? 'dark' : 'light'
@@ -30,6 +31,9 @@ const toggleTheme = () => {
       <v-btn size="large" variant="tonal" @click="toggleTheme()" prepend-icon="i-mdi:theme-light-dark">
         Перемкнути тему
       </v-btn>
+      <v-btn size="large" variant="tonal" @click="showUpdates = true; showExtra = false" prepend-icon="i-mdi:creation-outline">
+        Переглянути останнє оновлення
+      </v-btn>
       <a href="https://www.privat24.ua/send/hz9q7" target="_blank">
         <v-btn size="large" variant="tonal" prepend-icon="i-mdi:hand-coin">
           Підтримати розробку
@@ -40,6 +44,12 @@ const toggleTheme = () => {
           Переглянути репозиторій
         </v-btn>
       </a>
+    </v-card>
+  </v-overlay>
+  
+  <v-overlay v-model="showUpdates" class="d-flex align-center justify-center">
+    <v-card class="d-flex flex-column align-start" title="Останнє оновлення" subtitle="10.12.2025" prepend-icon="i-mdi:creation-outline">
+      <v-card-text>Було додано 3 нових слова, розділ оновлень на головній сторінці, кнопку на сторінці тренування, що відкриває інструкцію з використання тренажера, а також змінні іконки біля кількості правильних відповідей під час тренування.</v-card-text>
     </v-card>
   </v-overlay>
 

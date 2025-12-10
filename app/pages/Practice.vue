@@ -13,6 +13,7 @@ const currentWord = ref({})
 const answer = ref('')
 const pointsAmount = ref(0)
 const maxPoints = ref(0)
+const showGuide = ref(false)
 const showResults = ref(false)
 const mistakes = ref([])
 const showMistakes = ref(false)
@@ -138,22 +139,33 @@ const checkWord = () => {
 
         <div class="d-flex flex-wrap ga-2 my-6">
             <v-chip>слів залишилось: {{ array.length }}</v-chip>
-            <v-chip :color="chipColor">{{ pointsAmount }} з {{ maxPoints }} правильних відповідей</v-chip>
+            <v-chip :color="chipColor" :prepend-icon="chipColor === 'green' ? 'i-mdi:check-bold' : chipColor === 'red' ? 'i-mdi:close-thick' : ''">
+                {{ pointsAmount }} з {{ maxPoints }} правильних відповідей
+            </v-chip>
         </div>
 
         <v-text-field v-model="answer" @input="answer = answer.replace(/ /g, '')" @keyup.enter="answer.length > 1 ? checkWord() : ''"
-            label="запишіть слово маленькими літерами, а наголошені голосні - великими (першу літеру також можна записати великою, навіть якщо вона ненаголошена)" />
+            label="Запишіть тут слово з правильним наголошенням" />
 
-        <div class="d-flex flex-wrap ga-4">
+        <div class="d-flex align-center flex-wrap ga-4">
             <v-btn v-if="array.length > 1" :disabled="answer.length < 1" variant="tonal" @click="checkWord()" prepend-icon="i-mdi:check">
                 Перевірити
             </v-btn>
             <v-btn v-else :disabled="answer.length < 1" class="bg-green" size="large" @click="checkWord()" prepend-icon="i-mdi:trophy">
                 Закінчити
             </v-btn>
+            <v-btn variant="text" @click="showGuide = true" prepend-icon="i-mdi:tooltip-question">
+                Як користуватися?
+            </v-btn>
             <v-btn v-if="array.length > 1" variant="text" @click="isPreparation = true" prepend-icon="i-mdi:arrow-left">
                 Повернутися до налаштувань
             </v-btn>
         </div>
+
+        <v-overlay v-model="showGuide" class="d-flex align-center justify-center">
+            <v-card class="d-flex flex-column align-center" title="Інструкція з використання тренажера" prepend-icon="i-mdi:tooltip-question">
+                <v-card-text>Запишіть слово в полі введення маленькими літерами, а наголошені голосні - великими. Першу літеру слова можна записати великою, навіть якщо вона ненаголошена.</v-card-text>
+            </v-card>
+        </v-overlay>
     </div>
 </template>
