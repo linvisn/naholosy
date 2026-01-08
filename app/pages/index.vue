@@ -34,11 +34,6 @@ const toggleTheme = () => {
       <v-btn size="large" variant="tonal" @click="showUpdates = true; showExtra = false" prepend-icon="i-mdi:creation-outline">
         Переглянути останнє оновлення
       </v-btn>
-      <a href="https://www.privat24.ua/send/hz9q7" target="_blank">
-        <v-btn size="large" variant="tonal" prepend-icon="i-mdi:hand-coin">
-          Підтримати розробку
-        </v-btn>
-      </a>
       <a href="https://github.com/linvisn/naholosy" target="_blank">
         <v-btn size="large" variant="tonal" prepend-icon="i-mdi:github">
           Переглянути репозиторій
