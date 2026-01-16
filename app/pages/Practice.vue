@@ -69,103 +69,106 @@ const checkWord = () => {
 </script>
 
 <template>
-    <div v-if="isPreparation">
-        <v-alert class="text-h5 font-weight-bold" type="info" variant="text" icon-size="x-large" prominent
-            text="Оберіть нижченаведені параметри перед тим, як розпочати тренування" />
-        <div class="mt-6 mb-10">
-            <v-select v-model="chosenLetters" label="літери, з яких мають починатися слова" :items="letters" multiple
-                clearable />
-            <v-row class="d-flex flex-row">
-                <v-col><v-checkbox v-model="practiceAllWords" label="Практикувати всі слова" /></v-col>
-                <v-col><v-number-input v-model="wordsAmount" :min="1" :disabled="practiceAllWords"
-                        controlVariant="stacked" label="кількість слів" /></v-col>
-            </v-row>
-            <v-row class="d-flex flex-row">
-                <v-col><v-checkbox v-model="useRandomLetters" label="Використовувати випадкові літери" /></v-col>
-                <v-col><v-number-input v-model="randomLettersAmount" :min="1" :disabled="!useRandomLetters"
-                        controlVariant="stacked" label="кількість випадкових літер" /></v-col>
-            </v-row>
-        </div>
+    <div class="position-relative">
+    <Transition name="page" mode="out-in">
+        <div class="position-absolute top-0 left-0 w-100" v-if="isPreparation">
+            <v-alert class="text-h5 font-weight-bold" type="info" variant="text" icon-size="x-large" prominent
+                text="Оберіть нижченаведені параметри перед тим, як розпочати тренування" />
+            <div class="mt-6 mb-10">
+                <v-select v-model="chosenLetters" label="літери, з яких мають починатися слова" :items="letters" multiple clearable />
+                <v-row class="d-flex flex-row">
+                    <v-col><v-checkbox v-model="practiceAllWords" label="Практикувати всі слова" /></v-col>
+                    <v-col><v-number-input v-model="wordsAmount" :min="1" :disabled="practiceAllWords" controlVariant="stacked" label="кількість слів" /></v-col>
+                </v-row>
+                <v-row class="d-flex flex-row">
+                    <v-col><v-checkbox v-model="useRandomLetters" label="Використовувати випадкові літери" /></v-col>
+                    <v-col><v-number-input v-model="randomLettersAmount" :min="1" :disabled="!useRandomLetters" controlVariant="stacked" label="кількість випадкових літер" /></v-col>
+                </v-row>
+            </div>
 
-        <div class="d-flex align-center flex-wrap ga-4">
-            <v-btn class="bg-deep-orange-accent-4" size="large" variant="tonal" elevation="8" :disabled="chosenLetters.length < 1" @click="startPractice()" prepend-icon="i-mdi:play">
-                Розпочати
-            </v-btn>
-            <v-btn @click="chosenLetters = letters" prepend-icon="i-mdi:select-all">
-                Обрати всі літери
-            </v-btn>
-            <v-btn :disabled="!useRandomLetters" @click="chosenLetters = pickRandomLetters()" prepend-icon="i-mdi:shuffle">
-                Обрати випадкові літери
-            </v-btn>
-            <NuxtLink to="/">
-                <v-btn variant="text" prepend-icon="i-mdi:home">
-                    Повернутися до головної сторінки
+            <div class="d-flex align-center flex-wrap ga-4">
+                <v-btn class="bg-deep-orange-accent-4" size="large" variant="tonal" elevation="8" :disabled="chosenLetters.length < 1" @click="startPractice()" prepend-icon="i-mdi:play">
+                    Розпочати
                 </v-btn>
-            </NuxtLink>
-        </div>
-
-        <v-overlay v-model="showResults" class="d-flex align-center justify-center">
-            <v-card class="d-flex flex-column align-center" title="Результат" prepend-icon="i-mdi:information-box">
-                <v-card-text>Ви правильно визначили наголоси в {{ pointsAmount }} з {{ maxPoints }} слів!</v-card-text>
-                <v-btn v-if="mistakes.length > 0" class="mb-3" variant="tonal" @click="showMistakes = true; showResults = false" prepend-icon="i-mdi:eye">
-                    Переглянути помилки
+                <v-btn @click="chosenLetters = letters" prepend-icon="i-mdi:select-all">
+                    Обрати всі літери
                 </v-btn>
-            </v-card>
-        </v-overlay>
+                <v-btn :disabled="!useRandomLetters" @click="chosenLetters = pickRandomLetters()" prepend-icon="i-mdi:shuffle">
+                    Обрати випадкові літери
+                </v-btn>
+                <NuxtLink to="/">
+                    <v-btn variant="text" prepend-icon="i-mdi:home">
+                        Повернутися до головної сторінки
+                    </v-btn>
+                </NuxtLink>
+            </div>
 
-        <v-overlay v-model="showMistakes" class="d-flex align-center justify-center">
-            <v-card title="Помилки, яких ви припустилися" prepend-icon="i-mdi:alert-circle">
-                <v-table :style="{ 'max-width': '75vh', 'max-height': '75vh' }" striped="odd" density="compact"
-                    fixed-header hover>
-                    <thead>
-                        <tr>
-                            <th>ваша відповідь</th>
-                            <th>правильна відповідь</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="(mistake, mistakeIndex) in mistakes" :key="mistakeIndex">
-                            <td>{{ mistake.answer }}</td>
-                            <td>{{ Array.isArray(mistake.word) ? mistake.word.join('/') : mistake.word }}</td>
-                        </tr>
-                    </tbody>
-                </v-table>
-            </v-card>
-        </v-overlay>
-    </div>
+            <v-overlay v-model="showResults" class="d-flex align-center justify-center">
+                <v-card class="d-flex flex-column align-center" title="Результат" prepend-icon="i-mdi:information-box">
+                    <v-card-text>Ви правильно визначили наголоси в {{ pointsAmount }} з {{ maxPoints }} слів!</v-card-text>
+                    <v-btn v-if="mistakes.length > 0" class="mb-3" variant="tonal" @click="showMistakes = true; showResults = false" prepend-icon="i-mdi:eye">
+                        Переглянути помилки
+                    </v-btn>
+                </v-card>
+            </v-overlay>
 
-    <div v-else>
-        <v-alert class="text-h2 text-break" width="fit-content">{{ currentWord.display }}</v-alert>
-
-        <div class="d-flex flex-wrap ga-2 my-6">
-            <v-chip>слів залишилось: {{ array.length }}</v-chip>
-            <v-chip :color="chipColor" :prepend-icon="chipColor === 'green' ? 'i-mdi:check-bold' : chipColor === 'red' ? 'i-mdi:close-thick' : ''">
-                {{ pointsAmount }} з {{ maxPoints }} правильних відповідей
-            </v-chip>
+            <v-overlay v-model="showMistakes" class="d-flex align-center justify-center">
+                <v-card title="Помилки, яких ви припустилися" prepend-icon="i-mdi:alert-circle">
+                    <v-table :style="{ 'max-width': '75vh', 'max-height': '75vh' }" striped="odd" density="compact"
+                        fixed-header hover>
+                        <thead>
+                            <tr>
+                                <th>ваша відповідь</th>
+                                <th>правильна відповідь</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(mistake, mistakeIndex) in mistakes" :key="mistakeIndex">
+                                <td>{{ mistake.answer }}</td>
+                                <td>{{ Array.isArray(mistake.word) ? mistake.word.join('/') : mistake.word }}</td>
+                            </tr>
+                        </tbody>
+                    </v-table>
+                </v-card>
+            </v-overlay>
         </div>
 
-        <v-text-field v-model="answer" @input="answer = answer.replace(/ /g, '')" @keyup.enter="answer.length > 1 ? checkWord() : ''"
-            label="Запишіть тут слово з правильним наголошенням" />
+        <div class="position-absolute top-0 left-0 w-100" v-else>
+            <Transition name="translate" mode="out-in">
+                <v-alert :key="currentWord.display" class="text-h2 text-break" width="fit-content">{{ currentWord.display }}</v-alert>
+            </Transition>
 
-        <div class="d-flex align-center flex-wrap ga-4">
-            <v-btn v-if="array.length > 1" :disabled="answer.length < 1" variant="tonal" @click="checkWord()" prepend-icon="i-mdi:check">
-                Перевірити
-            </v-btn>
-            <v-btn v-else :disabled="answer.length < 1" class="bg-green" size="large" @click="checkWord()" prepend-icon="i-mdi:trophy">
-                Закінчити
-            </v-btn>
-            <v-btn variant="text" @click="showGuide = true" prepend-icon="i-mdi:tooltip-question">
-                Як користуватися?
-            </v-btn>
-            <v-btn v-if="array.length > 1" variant="text" @click="isPreparation = true" prepend-icon="i-mdi:arrow-left">
-                Повернутися до налаштувань
-            </v-btn>
+            <div class="d-flex flex-wrap ga-2 my-6">
+                <v-chip>слів залишилось: {{ array.length }}</v-chip>
+                <v-chip :color="chipColor" :prepend-icon="chipColor === 'green' ? 'i-mdi:check-bold' : chipColor === 'red' ? 'i-mdi:close-thick' : ''">
+                    {{ pointsAmount }} з {{ maxPoints }} правильних відповідей
+                </v-chip>
+            </div>
+
+            <v-text-field v-model="answer" @input="answer = answer.replace(/ /g, '')" @keyup.enter="answer.length > 1 ? checkWord() : ''"
+                label="Запишіть тут слово з правильним наголошенням" />
+
+            <div class="d-flex align-center flex-wrap ga-4">
+                <v-btn v-if="array.length > 1" :disabled="answer.length < 1" variant="tonal" @click="checkWord()" prepend-icon="i-mdi:check">
+                    Перевірити
+                </v-btn>
+                <v-btn v-else :disabled="answer.length < 1" class="bg-green" size="large" @click="checkWord()" prepend-icon="i-mdi:trophy">
+                    Закінчити
+                </v-btn>
+                <v-btn variant="text" @click="showGuide = true" prepend-icon="i-mdi:tooltip-question">
+                    Як користуватися?
+                </v-btn>
+                <v-btn v-if="array.length > 1" variant="text" @click="isPreparation = true" prepend-icon="i-mdi:arrow-left">
+                    Повернутися до налаштувань
+                </v-btn>
+            </div>
+
+            <v-overlay v-model="showGuide" class="d-flex align-center justify-center">
+                <v-card class="d-flex flex-column align-center" title="Інструкція з використання тренажера" prepend-icon="i-mdi:tooltip-question">
+                    <v-card-text>Запишіть слово в полі введення маленькими літерами, а наголошені голосні - великими. Першу літеру слова можна записати великою, навіть якщо вона ненаголошена.</v-card-text>
+                </v-card>
+            </v-overlay>
         </div>
-
-        <v-overlay v-model="showGuide" class="d-flex align-center justify-center">
-            <v-card class="d-flex flex-column align-center" title="Інструкція з використання тренажера" prepend-icon="i-mdi:tooltip-question">
-                <v-card-text>Запишіть слово в полі введення маленькими літерами, а наголошені голосні - великими. Першу літеру слова можна записати великою, навіть якщо вона ненаголошена.</v-card-text>
-            </v-card>
-        </v-overlay>
+    </Transition>
     </div>
 </template>
